@@ -1,9 +1,7 @@
 package app.views;
 
-import app.models.Menu;
+import app.models.MenuLabel;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,35 +11,17 @@ public class MenuOpciones {
     private int opcionInvalida;
     public int opcionElegida = 0;
 
-    private MenuOpciones(Menu menu){
-        this.titulo = menu.getTitulo();
-        this.opciones = menu.getOpciones();
+    private MenuOpciones(MenuLabel menuLabel){
+        this.titulo = menuLabel.getTitulo();
+        this.opciones = menuLabel.getOpciones();
         this.opcionInvalida = this.opciones.size();
     }
 
-    public static void run(Menu menu) {
-        MenuOpciones view = new MenuOpciones(menu);
+    public static int run(MenuLabel menuLabel) {
+        MenuOpciones view = new MenuOpciones(menuLabel);
         do {
             view.mostrar();
-            view.opcionElegida = view.seleccionarOpcion();
-            switch (view.opcionElegida) {
-                case 1:
-                    System.out.println("🔹 Registrando alumno...");
-                    break;
-                case 2:
-                    System.out.println("📚 Registrando libro...");
-                    break;
-                case 3:
-                    System.out.println("📦 Procesando préstamo...");
-                    break;
-                case 4:
-                    System.out.println("🚪 Saliendo del sistema. ¡Hasta luego!");
-                    break;
-                default:
-                    System.out.println("❌ Opción no reconocida.");
-
-            }
-
+            return view.seleccionarOpcion();
         } while (view.opcionElegida < view.opcionInvalida);
     }
 
@@ -62,8 +42,12 @@ public class MenuOpciones {
         while (true) {
             System.out.print("Seleccione una opción: ");
             if (scanner.hasNextInt()) {
-                this.opcionElegida = scanner.nextInt();
-                if (this.opcionElegida >= 1 && this.opcionElegida <= this.opciones.size()) {
+                int opcionElegida = scanner.nextInt();
+                if (opcionElegida >= 1 && opcionElegida < this.opciones.size()) {
+                    this.opcionElegida = opcionElegida - 1;
+                    break;
+                } else if (opcionElegida == this.opciones.size()) {
+                    System.out.println("Saliendo del Programa.");
                     break;
                 } else {
                     System.out.println("Opción fuera de rango. Intente nuevamente.");
