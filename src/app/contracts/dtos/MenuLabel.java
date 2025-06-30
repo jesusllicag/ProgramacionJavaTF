@@ -9,7 +9,7 @@ public class MenuLabel {
     private final List<String> opciones;
 
 
-    protected MenuLabel (String titulo, List<String> opciones) {
+    public MenuLabel (String titulo, List<String> opciones) {
         this.titulo = titulo;
         this.opciones = opciones;
     }
