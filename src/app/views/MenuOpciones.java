@@ -1,63 +1,87 @@
 package app.views;
 
-import app.models.MenuLabel;
+import app.contracts.dtos.MenuLabel;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuOpciones {
     private String titulo;
-    private List<String> opciones;
-    private int opcionInvalida;
-    public int opcionElegida = 0;
+    private List<String[]> options;
+    private boolean isExit;
+    private int selectedOption = -1;
 
-    private MenuOpciones(MenuLabel menuLabel){
+    public void setMenuLabel(MenuLabel menuLabel) {
         this.titulo = menuLabel.getTitulo();
-        this.opciones = menuLabel.getOpciones();
-        this.opcionInvalida = this.opciones.size();
+        this.options = menuLabel.getOpciones();
+        this.isExit = false;
     }
 
-    public static int run(MenuLabel menuLabel) {
-        MenuOpciones view = new MenuOpciones(menuLabel);
+    public void run() {
         do {
-            view.mostrar();
-            return view.seleccionarOpcion();
-        } while (view.opcionElegida < view.opcionInvalida);
+            this.mostrarInterfaz();
+            this.leerOpcionSeleccionada();
+            if(this.isExit) {
+                break;
+            }
+        } while (this.selectedOption == -1);
     }
 
-    public void mostrar() {
+    public boolean isExit() {
+        return isExit;
+    }
+
+    public String getOptionIndex() {
+        return this.options.get(this.selectedOption)[0];
+    }
+
+    private String getOptionLabel(int index) {
+        return this.options.get(index)[1];
+    }
+
+    private boolean validOption(int index) {
+        return index >= 0 && index < this.options.size();
+    }
+
+    private boolean isExitOption(int index) {
+        return index == this.options.size();
+    }
+
+    public void mostrarInterfaz() {
         System.out.println();
         System.out.println("+--------------------------------------+");
         System.out.printf("| %-36s |\n", this.titulo.toUpperCase());
         System.out.println("+--------------------------------------+");
-        for (int i = 0; i < this.opciones.size(); i++) {
-            System.out.printf("|  %d. %-32s |\n", i + 1, this.opciones.get(i));
+        for (int i = 0; i < this.options.size(); i++) {
+            System.out.printf("|  %d. %-32s |\n", i + 1, this.getOptionLabel(i));
         }
         System.out.println("+--------------------------------------+\n");
     }
 
-    public int seleccionarOpcion() {
+    public void leerOpcionSeleccionada() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.print("Seleccione una opción: ");
             if (scanner.hasNextInt()) {
-                int opcionElegida = scanner.nextInt();
-                if (opcionElegida >= 1 && opcionElegida < this.opciones.size()) {
-                    this.opcionElegida = opcionElegida - 1;
+                int selectedOption = scanner.nextInt();
+                if (this.validOption(selectedOption)) {
+                    this.selectedOption = selectedOption - 1;
                     break;
-                } else if (opcionElegida == this.opciones.size()) {
-                    System.out.println("Saliendo del Programa.");
+                } else if (this.isExitOption(selectedOption)) {
+                    this.isExit = true;
                     break;
                 } else {
                     System.out.println("Opción fuera de rango. Intente nuevamente.");
+                    this.selectedOption = -1;
                 }
             } else {
                 System.out.println("Entrada inválida. Ingrese un número.");
-                scanner.next(); // limpiar entrada
+                scanner.next();
             }
         }
+    }
 
-        return this.opcionElegida;
+    public void imprimirPantalla(String message) {
+        System.out.println(message);
     }
 }
