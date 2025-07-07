@@ -1,6 +1,7 @@
 package app.contracts.dtos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MenuLabel {
@@ -9,9 +10,9 @@ public class MenuLabel {
     private final List<String> opciones;
 
 
-    public MenuLabel (String titulo, List<String> opciones) {
+    public MenuLabel (String titulo, String ...opciones) {
         this.titulo = titulo;
-        this.opciones = opciones;
+        this.opciones = Arrays.asList(opciones);
     }
 
     public String getTitulo() {
