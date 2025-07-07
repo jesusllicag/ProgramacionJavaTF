@@ -31,8 +31,12 @@ public class BookController extends Controller<Book> implements IController {
 
     public void show() {
         String[] filter = this.view.runViewShow();
-        this.view.println(filter[0]);
-        this.view.println(filter[1]);
+        String label = switch (filter[0]) {
+            case "1" -> this.repository.findByIsbn(filter[1]);
+            case "2" -> this.repository.findByTitle(filter[1]);
+            default -> throw new IllegalArgumentException("Tipo Invalido");
+        };
+        this.view.println(label);
     }
 
     public void update() {

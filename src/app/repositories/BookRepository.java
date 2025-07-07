@@ -25,17 +25,17 @@ public class BookRepository extends Repository<Book> implements IBookRepository 
                 return book.toString();
             }
         }
-        return null;
+        return "No se pudo encontrar el registro";
     }
 
     @Override
     public String findByIsbn(String isbn) {
         for (Book book : this.database.getRecord()) {
-            if (book.getTitle().equalsIgnoreCase(isbn)) {
+            if (book.getIsbn().equalsIgnoreCase(isbn)) {
                 return book.toString();
             }
         }
-        return null;
+        return "No se pudo encontrar el registro";
     }
 
 }
