@@ -1,7 +1,6 @@
 package app.contracts.classes;
 
 import app.config.DatabaseTable;
-import app.contracts.models.Book;
 
 import java.util.List;
 
@@ -11,10 +10,6 @@ public abstract class Repository<T extends Model> {
 
     protected Repository(DatabaseTable<T> database) {
         this.database = database;
-    }
-
-    public void toCreate(String... args) {
-        this.database.create(args);
     }
 
     public String[] getAll() {
@@ -41,15 +36,14 @@ public abstract class Repository<T extends Model> {
         return null;
     }
 
-    public boolean update(T updatedModel) {
+    public void update(T updatedModel) {
         List<T> records = this.database.getRecord();
         for (int i = 0; i < records.size(); i++) {
             if (records.get(i).getId().equals(updatedModel.getId())) {
                 records.set(i, updatedModel);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public boolean delete(String id) {

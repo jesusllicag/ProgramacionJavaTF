@@ -1,7 +1,6 @@
 package app.bootstrap;
 
 import app.bootstrap.providers.LabelProvider;
-import app.config.Project;
 import app.contracts.interfaces.IController;
 import app.controllers.BookController;
 import app.controllers.UserController;
@@ -70,9 +69,9 @@ public class App {
     }
 
     private void closeApplication() {
-       System.out.printf(Project.getASCIIUtpLogo());
+       System.out.printf(app.config.App.getASCIIUtpLogo());
        System.out.println("Desarrollado por:");
-       System.out.println(Project.getOwner());
+       System.out.println(app.config.App.getOwnerSignature());
     }
 
 }

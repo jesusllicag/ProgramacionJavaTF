@@ -1,82 +1,141 @@
 package app.views;
 
 import app.contracts.classes.View;
+import app.contracts.models.Book;
+import app.schemas.BookSchema;
 
 public class BookView extends View {
+
+    BookSchema validator = new BookSchema();
+
     public String[] runViewStore() {
         String[] form = new String[4];
-        this.println("Crear Libro");
-
         // Validar ISBN
         while (true) {
-            this.println("Ingresar ISBN (Ej. 0-1234-1111-9): ");
-            String isbn = this.scanner.nextLine().trim();
-            if (isbn.matches("^\\d-\\d{4}-\\d{4}-\\d$")) {
+            String isbn = this.readInput("Ingresar ISBN (Ej. 0-1234-1111-9): ");
+            String validate = this.validator.isbn(isbn);
+            if (validate.equals("OK")) {
                 form[0] = isbn;
                 break;
             } else {
-                this.println("ISBN inválido. Intenta nuevamente.");
+                this.println(validate);
             }
         }
 
         // Validar Título
         while (true) {
-            this.println("Ingresar Título: ");
-            String titulo = this.scanner.nextLine().trim();
-            if (!titulo.isEmpty()) {
-                form[1] = titulo;
+            String title = this.readInput("Ingresar Título del libro: ");
+            String validate = this.validator.title(title);
+            if (validate.equals("OK")) {
+                form[1] = title;
                 break;
             } else {
-                this.println("El título no puede estar vacío.");
+                this.println(validate);
             }
         }
 
         // Validar Autor
         while (true) {
-            this.println("Ingresar Autor: ");
-            String autor = this.scanner.nextLine().trim();
-            if (!autor.isEmpty()) {
-                form[2] = autor;
+            String author = this.readInput("Ingresar Autor del Libro: ");
+            String validate = this.validator.author(author);
+            if (validate.equals("OK")) {
+                form[2] = author;
                 break;
             } else {
-                this.println("El autor no puede estar vacío.");
+                this.println(validate);
             }
         }
 
         // Validar Año
         while (true) {
-            this.println("Ingresar Año de publicación (Ej. 2005): ");
-            String yearStr = this.scanner.nextLine().trim();
-            if (yearStr.matches("^\\d{4}$")) {
-                int year = Integer.parseInt(yearStr);
-                int currentYear = java.time.Year.now().getValue();
-                if (year >= 1500 && year <= currentYear) {
-                    form[3] = yearStr;
-                    break;
-                }
+            String year = this.readInput("Ingresar Año de publicación (Ej. 2005): ");
+            String validate = this.validator.year(year);
+            if (validate.equals("OK")) {
+                form[3] = year;
+                break;
+            } else {
+                this.println(validate);
             }
-            this.println("Año inválido. Ingresa un año entre 1500 y " + java.time.Year.now().getValue() + ".");
         }
 
         return form;
     }
 
-    public String[] runViewShow() {
+    public String[] runViewSearch() {
         String[] form = new String[2];
         while (true) {
-            this.println("Buscar por ISBN o Titulo");
-            this.println("Elegir una opcion:");
-            this.println("1. Buscar por ISBN");
-            this.println("2. Buscar por Titulo");
-            String input = scanner.nextLine().trim();
-            if (input.equals("1") || input.equals("2")) {
+            String input = this.readInput("""
+                    Elegir una opción:\s
+                    1. ID\s
+                    2. ISBN\s
+                    3. Titulo\s
+                    4. Salir\s
+                    """
+            );
+            if (input.equals("1") || input.equals("2") || input.equals("3")) {
                 form[0] = input;
-                this.println("Ingrese patron de busqueda:");
-                form[1] = scanner.nextLine().trim();
+                form[1] = this.readInput("Ingrese patron de busqueda:");
+                return form;
+            } else if (input.equals("4")) {
+                form[0] = input;
                 return form;
             } else {
                 this.println("Porfavor ingrese una opcion valida.");
             }
         }
+    }
+
+    public Book runViewUpdate(Book book) {
+        this.println("Actualizando Libro con el ID: " + book.getId());
+
+        // Validacion de ISBN
+        while (true) {
+            String isbn = this.readIgnoreEnterInput("Actualizar ISBN: ", book.getIsbn());
+            String validate = this.validator.isbn(isbn);
+            if (validate.equals("OK")) {
+                book.setIsbn(isbn);
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        // Validar Título
+        while (true) {
+            String title = this.readIgnoreEnterInput("Actualizar Título: ", book.getTitle());
+            String validate = this.validator.title(title);
+            if (validate.equals("OK")) {
+                book.setTitle(title);
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        // Validar Autor
+        while (true) {
+            String author = this.readIgnoreEnterInput("Actualizar Autor: ", book.getAuthor());
+            String validate = this.validator.author(author);
+            if (validate.equals("OK")) {
+                book.setAuthor(author);
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        // Validar Año
+        while (true) {
+            String year = this.readIgnoreEnterInput("Actualizar Año de publicación: ", book.getYear());
+            String validate = this.validator.year(year);
+            if (validate.equals("OK")) {
+                book.setYear(year);
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        return book;
     }
 }
