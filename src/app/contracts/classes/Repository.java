@@ -1,6 +1,8 @@
 package app.contracts.classes;
 
 import app.config.DatabaseTable;
+import app.contracts.interfaces.IRepository;
+import app.contracts.models.User;
 
 import java.util.List;
 
@@ -21,6 +23,15 @@ public abstract class Repository<T extends Model> {
         }
 
         return arr;
+    }
+
+    public T getById(String id) throws ClassNotFoundException {
+        for (T model : this.database.getRecord()) {
+            if (model.getId().equalsIgnoreCase(id)) {
+                return model;
+            }
+        }
+        throw new ClassNotFoundException(IRepository.MSG_ITEM_NOT_FOUND);
     }
 
     public void save(T model) {

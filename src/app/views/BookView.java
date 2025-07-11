@@ -61,26 +61,14 @@ public class BookView extends View {
         return form;
     }
 
-    public String[] runViewSearch() {
-        String[] form = new String[2];
+    public String[] runViewSearch() throws NullPointerException  {
         while (true) {
-            String input = this.readInput("""
-                    Elegir una opción:\s
-                    1. ID\s
-                    2. ISBN\s
-                    3. Titulo\s
-                    4. Salir\s
-                    """
-            );
-            if (input.equals("1") || input.equals("2") || input.equals("3")) {
-                form[0] = input;
-                form[1] = this.readInput("Ingrese patron de busqueda:");
-                return form;
-            } else if (input.equals("4")) {
-                form[0] = input;
-                return form;
-            } else {
-                this.println("Porfavor ingrese una opcion valida.");
+            this.println("Elegir Patrón de búsqueda: ");
+            this.println("1. ID\n2. ISBN\n3. Titulo\n4. Salir");
+            try {
+                return this.readSearchInputOptions("123", "4");
+            } catch (NullPointerException e) {
+                this.println("Por favor ingrese una opción valida.");
             }
         }
     }

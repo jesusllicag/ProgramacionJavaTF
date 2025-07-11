@@ -19,7 +19,7 @@ public class BookController extends Controller<Book> implements IController {
         this.view.println("Lista de Libros");
         String[] list = this.repository.getAll();
         for (String s : list) {
-            System.out.println(s);
+            this.view.println(s);
         }
     }
 
@@ -32,7 +32,6 @@ public class BookController extends Controller<Book> implements IController {
 
     public void show() {
         this.view.println("Buscar Libro");
-        this.view.println("Buscar por ID, ISBN o Titulo");
         String[] filter = this.view.runViewSearch();
         String label = "";
         try {
@@ -47,7 +46,6 @@ public class BookController extends Controller<Book> implements IController {
 
     public void update() {
         this.view.println("Actualizar Libro");
-        this.view.println("Elegir Libro por ID, ISBN o Titulo para modificar");
         String[] filter = this.view.runViewSearch();
         Book book;
         try {
@@ -64,7 +62,6 @@ public class BookController extends Controller<Book> implements IController {
 
     public void destroy() {
         this.view.println("Eliminar Libro");
-        this.view.println("Elegir Libro por ID, ISBN o Titulo para eliminar");
         String[] filter = this.view.runViewSearch();
         Book book;
         try {
@@ -74,7 +71,7 @@ public class BookController extends Controller<Book> implements IController {
             return;
         }
         String confirm = this.view.readInput(
-            "Esta seguro que desea eliminar el siguiente libro? [Y/N]\n" + book.toString() + " "
+            "Esta seguro que desea eliminar el siguiente libro? [Y/N]\n" + book.toString() + "\n"
         );
         if (confirm.equalsIgnoreCase("Y")) {
             this.repository.delete(book.getId());

@@ -5,6 +5,7 @@ import app.contracts.interfaces.IController;
 import app.controllers.BookController;
 import app.controllers.UserController;
 import app.repositories.BookRepository;
+import app.repositories.UserRepository;
 import app.views.MenuOpciones;
 import database.Books;
 import database.Users;
@@ -56,7 +57,7 @@ public class App {
         try {
             IController controller = switch (module) {
                 case "book" -> new BookController(new BookRepository(books));
-                case "user" -> new UserController(users);
+                case "user" -> new UserController(new UserRepository(users));
                 default -> throw new IllegalStateException("Unexpected value: " + module);
             };
             Method method = controller.getClass().getMethod(methodName);

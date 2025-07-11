@@ -11,7 +11,7 @@ public class BookSchema extends Validator {
         };
 
         String[] messages = {
-            "El ISBN no puede estar vacio",
+            "El ISBN no puede estar vacío",
             "ISBN inválido. Intenta nuevamente."
         };
 

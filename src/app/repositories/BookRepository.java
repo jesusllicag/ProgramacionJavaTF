@@ -18,15 +18,6 @@ public class BookRepository extends Repository<Book> implements IRepository {
         this.save(book);
     }
 
-    public Book getById(String id) throws ClassNotFoundException {
-        for (Book book : this.database.getRecord()) {
-            if (book.getId().equalsIgnoreCase(id)) {
-                return book;
-            }
-        }
-        throw new ClassNotFoundException(IRepository.MSG_ITEM_NOT_FOUND);
-    }
-
     public Book getByTitle(String title) throws ClassNotFoundException {
         for (Book book : this.database.getRecord()) {
             if (book.getTitle().equalsIgnoreCase(title)) {
