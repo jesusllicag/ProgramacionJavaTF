@@ -2,6 +2,7 @@ package app.contracts.classes;
 
 import app.config.DatabaseTable;
 import app.contracts.interfaces.IRepository;
+import app.contracts.models.Book;
 import app.contracts.models.User;
 
 import java.util.List;
@@ -9,30 +10,26 @@ import java.util.List;
 
 public abstract class Repository<T extends Model> {
     protected DatabaseTable<T> database;
+    protected DatabaseTable<? extends Model>[] relations;
 
-    protected Repository(DatabaseTable<T> database) {
+    @SafeVarargs
+    protected Repository(
+            DatabaseTable<T> database,
+            DatabaseTable<? extends Model> ...relations
+    ) {
         this.database = database;
+        this.relations = relations;
     }
 
-    public String[] getAll() {
-        List<T> lista = this.database.getRecord();
-        String[] arr = new String[lista.size()];
-
-        for (int i = 0; i < lista.size(); i++) {
-            arr[i] = lista.get(i).toString();
-        }
-
-        return arr;
+    public List<T> getAll() {
+        return this.database.getRecord();
     }
 
     public T getById(String id) throws ClassNotFoundException {
-        for (T model : this.database.getRecord()) {
-            if (model.getId().equalsIgnoreCase(id)) {
-                return model;
-            }
-        }
-        throw new ClassNotFoundException(IRepository.MSG_ITEM_NOT_FOUND);
+        return this.database.get(id);
     }
+
+
 
     public void save(T model) {
         this.database.insert(model);
@@ -57,8 +54,8 @@ public abstract class Repository<T extends Model> {
         }
     }
 
-    public boolean delete(String id) {
+    public boolean delete(T model) {
         List<T> records = this.database.getRecord();
-        return records.removeIf(item -> item.getId().equals(id));
+        return records.removeIf(item -> item.getId().equals(model.getId()));
     }
 }

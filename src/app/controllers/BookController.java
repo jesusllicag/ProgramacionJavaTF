@@ -17,9 +17,9 @@ public class BookController extends Controller<Book> implements IController {
 
     public void index() {
         this.view.println("Lista de Libros");
-        String[] list = this.repository.getAll();
-        for (String s : list) {
-            this.view.println(s);
+        Book[] list = this.repository.getAllWithStock();
+        for (Book book : list) {
+            this.view.println(book.toStringWithStock());
         }
     }
 
@@ -36,7 +36,7 @@ public class BookController extends Controller<Book> implements IController {
         String label = "";
         try {
             Book book = this.repository.getSelectedFilter(filter);
-            label = book.toString();
+            label = book.toStringWithStock();
         } catch (ClassNotFoundException | IllegalStateException e) {
             label = e.getMessage();
         } finally {
@@ -60,7 +60,7 @@ public class BookController extends Controller<Book> implements IController {
         this.view.println("Libro Actualizado");
     }
 
-    public void destroy() {
+    public void destroy() throws ClassNotFoundException {
         this.view.println("Eliminar Libro");
         String[] filter = this.view.runViewSearch();
         Book book;
@@ -74,7 +74,7 @@ public class BookController extends Controller<Book> implements IController {
             "Esta seguro que desea eliminar el siguiente libro? [Y/N]\n" + book.toString() + "\n"
         );
         if (confirm.equalsIgnoreCase("Y")) {
-            this.repository.delete(book.getId());
+            this.repository.toDelete(book);
             this.view.println("Libro Eliminado");
         } else {
             this.view.println("Saliendo sin realizar acción");

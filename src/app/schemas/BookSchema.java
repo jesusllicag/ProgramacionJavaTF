@@ -57,4 +57,21 @@ public class BookSchema extends Validator {
         };
         return this.validate(rules, messages);
     }
+
+    public String stock(String stock) {
+        int intStock = Integer.parseInt(stock);
+        boolean[] rules = {
+                stock.matches("^\\d+$"),
+                !stock.isEmpty(),
+                intStock > 0,
+                intStock != 0,
+        };
+        String[] messages = {
+                "El stock debe ser un número",
+                "El stock no puede estar vacío",
+                "El stock no puede ser un número negativo",
+                "El stock no puede ser cero",
+        };
+        return this.validate(rules, messages);
+    }
 }

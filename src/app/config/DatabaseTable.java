@@ -1,10 +1,12 @@
 package app.config;
 
 import app.contracts.classes.Model;
+import app.contracts.interfaces.IDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DatabaseTable<M extends Model> {
+public abstract class DatabaseTable<M extends Model> implements IDatabase {
     protected int id = 0;
     protected final List<M> record = new ArrayList<>();
 
@@ -18,6 +20,15 @@ public abstract class DatabaseTable<M extends Model> {
     public int createId() {
         this.id++;
         return this.id;
+    }
+
+    public M get(String id) throws ClassNotFoundException {
+        for (M model : this.getRecord()) {
+            if (model.getId().equalsIgnoreCase(id)) {
+                return model;
+            }
+        }
+        throw new ClassNotFoundException(DatabaseTable.MSG_ITEM_NOT_FOUND);
     }
 
     public void create(String ...data) {

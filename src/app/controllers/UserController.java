@@ -10,6 +10,8 @@ import app.repositories.UserRepository;
 import app.views.UserView;
 import app.views.UserView;
 
+import java.util.List;
+
 public class UserController extends Controller<User> implements IController {
 
     protected UserRepository repository;
@@ -21,9 +23,9 @@ public class UserController extends Controller<User> implements IController {
 
     public void index() {
         this.view.println("Lista de Estudiantes");
-        String[] list = this.repository.getAll();
-        for (String s : list) {
-            this.view.println(s);
+        List<User> list = this.repository.getAll();
+        for (User user : list) {
+            this.view.println(user.toString());
         }
     }
 
@@ -78,7 +80,7 @@ public class UserController extends Controller<User> implements IController {
                 "Esta seguro que desea eliminar el siguiente libro? [Y/N]\n" + user.toString() + "\n"
         );
         if (confirm.equalsIgnoreCase("Y")) {
-            this.repository.delete(user.getId());
+            this.repository.delete(user);
             this.view.println("Usuario Eliminado");
         } else {
             this.view.println("Saliendo sin realizar acción");

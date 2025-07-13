@@ -1,7 +1,35 @@
 package app.contracts.models;
 
-public class Stock {
-    private int id;
-    private int bookId;
-    private int quantity;
+import app.contracts.classes.Model;
+
+public class Stock extends Model {
+    protected String bookId;
+    protected String quantity;
+
+    @Override
+    public void init(int id, String ...data) {
+        this.id = id;
+        this.bookId = data[0];
+        this.quantity = data[1];
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String toBookRelationString() {
+        return "Cantidad: " + this.quantity;
+    }
 }

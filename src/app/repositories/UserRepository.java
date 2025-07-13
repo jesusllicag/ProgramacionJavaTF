@@ -1,14 +1,16 @@
 package app.repositories;
 
 import app.config.DatabaseTable;
+import app.contracts.classes.Model;
 import app.contracts.classes.Repository;
 import app.contracts.interfaces.IRepository;
 import app.contracts.models.User;
 
 public class UserRepository extends Repository<User> implements IRepository {
-    
-    public UserRepository(DatabaseTable<User> databaseTable) {
-        super(databaseTable);
+
+    @SafeVarargs
+    public UserRepository(DatabaseTable<User> databaseTable, DatabaseTable<Model> ...relations) {
+        super(databaseTable, relations);
     }
 
     public void toSave(String... args) {

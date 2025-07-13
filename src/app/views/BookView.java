@@ -2,6 +2,7 @@ package app.views;
 
 import app.contracts.classes.View;
 import app.contracts.models.Book;
+import app.contracts.models.Stock;
 import app.schemas.BookSchema;
 
 public class BookView extends View {
@@ -9,7 +10,7 @@ public class BookView extends View {
     BookSchema validator = new BookSchema();
 
     public String[] runViewStore() {
-        String[] form = new String[4];
+        String[] form = new String[5];
         // Validar ISBN
         while (true) {
             String isbn = this.readInput("Ingresar ISBN (Ej. 0-1234-1111-9): ");
@@ -52,6 +53,18 @@ public class BookView extends View {
             String validate = this.validator.year(year);
             if (validate.equals("OK")) {
                 form[3] = year;
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        // Validar Stock
+        while (true) {
+            String stock = this.readInput("Ingresar numero de stock: ");
+            String validate = this.validator.stock(stock);
+            if (validate.equals("OK")) {
+                form[4] = stock;
                 break;
             } else {
                 this.println(validate);
@@ -118,6 +131,20 @@ public class BookView extends View {
             String validate = this.validator.year(year);
             if (validate.equals("OK")) {
                 book.setYear(year);
+                break;
+            } else {
+                this.println(validate);
+            }
+        }
+
+        // Validar Stock
+        while (true) {
+            String quantity = this.readIgnoreEnterInput("Actualizar numero de stock: ", book.getStock().getQuantity());
+            String validate = this.validator.stock(quantity);
+            if (validate.equals("OK")) {
+                Stock stock = book.getStock();
+                stock.setQuantity(quantity);
+                book.setStock(stock);
                 break;
             } else {
                 this.println(validate);

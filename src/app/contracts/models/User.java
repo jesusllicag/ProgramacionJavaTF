@@ -50,6 +50,10 @@ public class User extends Model {
 
     @Override
     public String toString() {
-        return this.id + " | " + this.dni + " | " + this.name + " | " + this.email + " | " + this.phone;
+        return  "ID: " + this.id + " | " +
+                "DNI: " + this.dni + " | " +
+                "Nombre: " + this.name + " | " +
+                "Correo: " + this.email + " | " +
+                "Teléfono: " + this.phone;
     }
 }

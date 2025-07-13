@@ -7,6 +7,7 @@ public class Book extends Model {
     protected String title;
     protected String author;
     protected String year;
+    protected Stock stock;
 
     public void init(int id, String ...data) {
         this.id = id;
@@ -48,8 +49,24 @@ public class Book extends Model {
         this.year = year;
     }
 
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
     @Override
     public String toString() {
-        return this.id + " | " + this.isbn + " | " + this.title + " | " + this.author + " | " + this.year;
+        return  "ID: " + this.id + " | " +
+                "ISBN: " + this.isbn + " | " +
+                "Titulo: " + this.title + " | " +
+                "Autor: " + this.author + " | " +
+                "Año de Publicación: " + this.year;
+    }
+
+    public String toStringWithStock() {
+        return this.toString() + " | " + this.stock.toBookRelationString();
     }
 }
