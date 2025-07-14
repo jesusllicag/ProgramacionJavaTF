@@ -3,10 +3,17 @@ package app.views;
 import app.contracts.classes.View;
 import app.contracts.models.User;
 import app.schemas.UserSchema;
+import java.util.List;
 
 public class UserView extends View {
 
     UserSchema validator = new UserSchema();
+
+    public void runViewList(List<User> users) {
+        for (User user : users) {
+            this.println(user.toString());
+        }
+    }
 
     public String[] runViewStore() {
         String[] form = new String[4];

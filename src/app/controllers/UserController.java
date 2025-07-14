@@ -1,13 +1,9 @@
 package app.controllers;
 
-import app.config.DatabaseTable;
 import app.contracts.classes.Controller;
 import app.contracts.interfaces.IController;
 import app.contracts.models.User;
-import app.contracts.models.User;
 import app.repositories.UserRepository;
-import app.repositories.UserRepository;
-import app.views.UserView;
 import app.views.UserView;
 
 import java.util.List;
@@ -24,9 +20,7 @@ public class UserController extends Controller<User> implements IController {
     public void index() {
         this.view.println("Lista de Estudiantes");
         List<User> list = this.repository.getAll();
-        for (User user : list) {
-            this.view.println(user.toString());
-        }
+        this.view.runViewList(list);
     }
 
     public void store() {

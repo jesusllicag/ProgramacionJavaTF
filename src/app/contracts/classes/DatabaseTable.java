@@ -1,6 +1,5 @@
-package app.config;
+package app.contracts.classes;
 
-import app.contracts.classes.Model;
 import app.contracts.interfaces.IDatabase;
 
 import java.util.ArrayList;
@@ -44,5 +43,4 @@ public abstract class DatabaseTable<M extends Model> implements IDatabase {
     public void insert(M model) {
         this.record.add(model);
     }
-
 }

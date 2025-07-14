@@ -2,12 +2,15 @@ package app.contracts.models;
 
 import app.contracts.classes.Model;
 
+import java.util.List;
+
 public class Book extends Model {
     protected String isbn;
     protected String title;
     protected String author;
     protected String year;
     protected Stock stock;
+    protected List<Loan> loans;
 
     public void init(int id, String ...data) {
         this.id = id;
@@ -55,6 +58,22 @@ public class Book extends Model {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public int getLoansQuantity() {
+        return this.loans.size();
+    }
+
+    public int getAvaliableBooksQuantity() {
+        return Integer.parseInt(this.getStock().getQuantity()) - this.getLoansQuantity();
     }
 
     @Override

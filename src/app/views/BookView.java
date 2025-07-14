@@ -5,9 +5,17 @@ import app.contracts.models.Book;
 import app.contracts.models.Stock;
 import app.schemas.BookSchema;
 
+import java.util.List;
+
 public class BookView extends View {
 
     BookSchema validator = new BookSchema();
+
+    public void runViewList(List<Book> books) {
+        for (Book book : books) {
+            this.println(book.toStringWithStock());
+        }
+    }
 
     public String[] runViewStore() {
         String[] form = new String[5];

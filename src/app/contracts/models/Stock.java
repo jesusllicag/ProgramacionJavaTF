@@ -5,8 +5,7 @@ import app.contracts.classes.Model;
 public class Stock extends Model {
     protected String bookId;
     protected String quantity;
-
-    @Override
+    
     public void init(int id, String ...data) {
         this.id = id;
         this.bookId = data[0];
@@ -15,10 +14,6 @@ public class Stock extends Model {
 
     public String getBookId() {
         return bookId;
-    }
-
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
     }
 
     public String getQuantity() {

@@ -1,6 +1,6 @@
 package database;
 
-import app.config.DatabaseTable;
+import app.contracts.classes.DatabaseTable;
 import app.contracts.models.Stock;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class Stocks extends DatabaseTable<Stock> {
         this.create("8", "1");
     }
 
-    public Stock getStockByBookId(String bookId) throws ClassNotFoundException {
+    public Stock getByBookId(String bookId) throws ClassNotFoundException {
         List<Stock> stocks = this.getRecord();
         for (Stock stock : stocks) {
             if (stock.getBookId().equals(bookId)) {

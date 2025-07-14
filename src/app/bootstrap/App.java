@@ -3,10 +3,10 @@ package app.bootstrap;
 import app.bootstrap.providers.UseCaseProvider;
 import app.bootstrap.providers.LabelProvider;
 import app.contracts.interfaces.IController;
-import app.controllers.UserController;
-import app.repositories.UserRepository;
-import app.views.MenuOpciones;
+import app.utils.AppUtils;
+import app.views.MenuOptionsView;
 import database.Books;
+import database.Loans;
 import database.Stocks;
 import database.Users;
 
@@ -17,6 +17,7 @@ public class App {
     public Books books = new Books();
     public Stocks stocks = new Stocks();
     public Users users = new Users();
+    public Loans loans = new Loans();
 
     private final LabelProvider labelProvider = new LabelProvider();
     private final UseCaseProvider useCaseProvider = new UseCaseProvider();
@@ -36,7 +37,7 @@ public class App {
     }
 
     private String renderMenuInterfaces() {
-        MenuOpciones viewMenu = new MenuOpciones();
+        MenuOptionsView viewMenu = new MenuOptionsView();
         String controller;
         do {
             viewMenu.setMenuLabel(this.labelProvider.getMainMenuLabel());
@@ -58,9 +59,10 @@ public class App {
         String module = args[0];
         String methodName = args[1];
         try {
-            IController controller = switch (module) {
+            IController controller = (IController) switch (module) {
                 case "book" -> this.useCaseProvider.book(books, stocks);
                 case "user" -> this.useCaseProvider.user(users);
+                case "loan" -> this.useCaseProvider.loan(loans, users, books, stocks);
                 default -> throw new IllegalStateException("Unexpected value: " + module);
             };
             Method method = controller.getClass().getMethod(methodName);
@@ -73,9 +75,9 @@ public class App {
     }
 
     private void closeApplication() {
-       System.out.printf(app.config.App.getASCIIUtpLogo());
+       System.out.printf(AppUtils.getASCIIUtpLogo());
        System.out.println("Desarrollado por:");
-       System.out.println(app.config.App.getOwnerSignature());
+       System.out.println(AppUtils.getOwnerSignature());
     }
 
 }

@@ -1,6 +1,6 @@
 package app.repositories;
 
-import app.config.DatabaseTable;
+import app.contracts.classes.DatabaseTable;
 import app.contracts.classes.Model;
 import app.contracts.classes.Repository;
 import app.contracts.interfaces.IRepository;

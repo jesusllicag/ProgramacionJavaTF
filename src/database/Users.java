@@ -1,6 +1,6 @@
 package database;
 
-import app.config.DatabaseTable;
+import app.contracts.classes.DatabaseTable;
 import app.contracts.models.User;
 
 public class Users extends DatabaseTable<User>  {
@@ -15,4 +15,5 @@ public class Users extends DatabaseTable<User>  {
         this.create("77665544", "Jesus Llica", "jesus@mail.com", "999888777");
         this.create("77665545", "Marco Heldres", "marco@mail.com", "987654321");
     }
+
 }

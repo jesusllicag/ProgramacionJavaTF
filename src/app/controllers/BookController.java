@@ -6,6 +6,8 @@ import app.contracts.models.Book;
 import app.repositories.BookRepository;
 import app.views.BookView;
 
+import java.util.List;
+
 public class BookController extends Controller<Book> implements IController {
 
     protected BookRepository repository;
@@ -17,10 +19,8 @@ public class BookController extends Controller<Book> implements IController {
 
     public void index() {
         this.view.println("Lista de Libros");
-        Book[] list = this.repository.getAllWithStock();
-        for (Book book : list) {
-            this.view.println(book.toStringWithStock());
-        }
+        List<Book> list = this.repository.getAllWithStock();
+        this.view.runViewList(list);
     }
 
     public void store() {

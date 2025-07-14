@@ -1,13 +1,16 @@
 package app.repositories;
 
-import app.config.DatabaseTable;
+import app.contracts.classes.DatabaseTable;
 import app.contracts.classes.Model;
 import app.contracts.classes.Repository;
 import app.contracts.interfaces.IRepository;
 import app.contracts.models.Book;
+import app.contracts.models.Loan;
 import app.contracts.models.Stock;
+import database.Loans;
 import database.Stocks;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BookRepository extends Repository<Book> implements IRepository {
@@ -24,7 +27,11 @@ public class BookRepository extends Repository<Book> implements IRepository {
         return (Stocks) this.relations[0];
     }
 
-    public Book[] getAllWithStock() {
+    protected Loans loan() {
+        return (Loans) this.relations[1];
+    }
+
+    public List<Book> getAllWithStock() {
         List<Book> books = this.database.getRecord();
         List<Stock> stocks = this.stock().getRecord();
         Book[] arr = new Book[books.size()];
@@ -36,7 +43,16 @@ public class BookRepository extends Repository<Book> implements IRepository {
             arr[i] = book;
         }
 
-        return arr;
+        return Arrays.asList(arr);
+    }
+
+    public Book getFullById(String id) throws ClassNotFoundException {
+        Book book = this.database.get(id);
+        Stock stock = this.stock().getByBookId(book.getId());
+        List<Loan> loan = this.loan().getListByBookId(book.getId());
+        book.setStock(stock);
+        book.setLoans(loan);
+        return book;
     }
 
     public void toSave(String... args) {
@@ -76,7 +92,7 @@ public class BookRepository extends Repository<Book> implements IRepository {
             case "3" -> this.getByTitle(filterCase[1]);
             default -> throw new IllegalStateException("Saliendo sin realizar acción");
         };
-        Stock stock = this.stock().getStockByBookId(book.getId());
+        Stock stock = this.stock().getByBookId(book.getId());
         book.setStock(stock);
         return book;
     }
@@ -85,7 +101,7 @@ public class BookRepository extends Repository<Book> implements IRepository {
         List<Book> books = this.database.getRecord();
         Stock stock;
         try {
-            stock = this.stock().getStockByBookId(book.getId());
+            stock = this.stock().getByBookId(book.getId());
         } catch (ClassCastException e) {
             return false;
         }

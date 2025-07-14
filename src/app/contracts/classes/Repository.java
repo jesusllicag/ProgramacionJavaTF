@@ -1,10 +1,5 @@
 package app.contracts.classes;
 
-import app.config.DatabaseTable;
-import app.contracts.interfaces.IRepository;
-import app.contracts.models.Book;
-import app.contracts.models.User;
-
 import java.util.List;
 
 

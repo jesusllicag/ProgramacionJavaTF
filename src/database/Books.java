@@ -1,6 +1,6 @@
 package database;
 
-import app.config.DatabaseTable;
+import app.contracts.classes.DatabaseTable;
 import app.contracts.models.Book;
 
 public class Books extends DatabaseTable<Book> {

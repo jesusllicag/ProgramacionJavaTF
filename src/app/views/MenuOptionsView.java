@@ -4,7 +4,7 @@ import app.contracts.dtos.MenuLabel;
 
 import java.util.*;
 
-public class MenuOpciones {
+public class MenuOptionsView {
     private String titulo;
     private List<String[]> options;
     private boolean isExit;
