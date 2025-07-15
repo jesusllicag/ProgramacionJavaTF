@@ -12,7 +12,7 @@ import database.Users;
 
 import java.util.List;
 
-public class LoanRepository extends Repository<Loan> implements IRepository {
+public class LoanRepository extends Repository<Loan> {
 
     @SafeVarargs
     public LoanRepository(

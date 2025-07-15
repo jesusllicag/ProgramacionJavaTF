@@ -6,7 +6,7 @@ import app.contracts.classes.Repository;
 import app.contracts.interfaces.IRepository;
 import app.contracts.models.User;
 
-public class UserRepository extends Repository<User> implements IRepository {
+public class UserRepository extends Repository<User> {
 
     @SafeVarargs
     public UserRepository(DatabaseTable<User> databaseTable, DatabaseTable<Model> ...relations) {

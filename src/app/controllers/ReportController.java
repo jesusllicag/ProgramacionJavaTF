@@ -1,22 +1,18 @@
 package app.controllers;
 
 import app.contracts.classes.Controller;
-import app.contracts.interfaces.IController;
 import app.contracts.models.Book;
 import app.contracts.models.Loan;
 import app.repositories.BookRepository;
 import app.repositories.LoanRepository;
 import app.repositories.UserRepository;
-import app.views.BookView;
-import app.views.LoanView;
 import app.views.ReportView;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReportController extends Controller implements IController {
+public class ReportController extends Controller {
 
     protected UserRepository userRepository;
     protected LoanRepository loanRepository;

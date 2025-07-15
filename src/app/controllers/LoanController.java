@@ -1,7 +1,6 @@
 package app.controllers;
 
 import app.contracts.classes.Controller;
-import app.contracts.interfaces.IController;
 import app.contracts.models.Book;
 import app.contracts.models.Loan;
 import app.contracts.models.User;
@@ -13,7 +12,7 @@ import app.views.LoanView;
 import app.views.UserView;
 import java.util.List;
 
-public class LoanController extends Controller<Loan> implements IController {
+public class LoanController extends Controller<Loan> {
 
     protected LoanRepository repository;
     protected UserRepository userRepository;

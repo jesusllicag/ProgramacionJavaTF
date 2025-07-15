@@ -1,14 +1,13 @@
 package app.controllers;
 
 import app.contracts.classes.Controller;
-import app.contracts.interfaces.IController;
 import app.contracts.models.Book;
 import app.repositories.BookRepository;
 import app.views.BookView;
 
 import java.util.List;
 
-public class BookController extends Controller<Book> implements IController {
+public class BookController extends Controller<Book> {
 
     protected BookRepository repository;
     protected BookView view = new BookView();

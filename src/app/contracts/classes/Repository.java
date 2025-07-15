@@ -1,9 +1,11 @@
 package app.contracts.classes;
 
+import app.contracts.interfaces.IRepository;
+
 import java.util.List;
 
 
-public abstract class Repository<T extends Model> {
+public abstract class Repository<T extends Model> implements IRepository {
     protected DatabaseTable<T> database;
     protected DatabaseTable<? extends Model>[] relations;
 

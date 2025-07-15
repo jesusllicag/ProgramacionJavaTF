@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BookRepository extends Repository<Book> implements IRepository {
+public class BookRepository extends Repository<Book> {
 
     @SafeVarargs
     public BookRepository(

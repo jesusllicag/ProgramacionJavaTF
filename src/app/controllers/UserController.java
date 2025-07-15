@@ -1,14 +1,13 @@
 package app.controllers;
 
 import app.contracts.classes.Controller;
-import app.contracts.interfaces.IController;
 import app.contracts.models.User;
 import app.repositories.UserRepository;
 import app.views.UserView;
 
 import java.util.List;
 
-public class UserController extends Controller<User> implements IController {
+public class UserController extends Controller<User> {
 
     protected UserRepository repository;
     protected UserView view = new UserView();
