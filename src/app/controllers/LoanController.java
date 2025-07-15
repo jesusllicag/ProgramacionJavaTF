@@ -65,9 +65,15 @@ public class LoanController extends Controller<Loan> implements IController {
             this.view.println("No hay préstamos registrados aún.\n");
             return;
         }
-
-        String code = this.view.runViewUpdateSelector(list);
-        Loan loan = this.repository.getByCode(code);
+        Loan loan = null;
+        do {
+            try {
+                String code = this.view.runViewUpdateSelector(list);
+                loan = this.repository.getByCode(code);
+            } catch (ClassNotFoundException e) {
+                this.view.println("El código ingresado es incorrecto.");
+            }
+        } while (loan == null);
         loan.setRtnDate();
         this.view.println("Devolución exitosa");
     }

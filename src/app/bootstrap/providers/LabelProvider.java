@@ -30,12 +30,12 @@ public class LabelProvider implements AppModules {
                 ),
                 AppModules.USER, new MenuLabel(
                         "========= GESTION USUARIOS =========",
-                        AppModules.STORE_USECASE + "store::Registrar Usuario",
-                        AppModules.INDEX_USECASE + "index::Listar Usuario",
-                        AppModules.SHOW_USECASE + "show::Buscar Usuario por DNI o Nombre",
-                        AppModules.UPDATE_USECASE + "update::Editar usuario",
-                        AppModules.DESTROY_USECASE + "destroy::Eliminar usuario",
-                        AppModules.EXIT + "exit::Regresar al menu principal"
+                        AppModules.STORE_USECASE + "::Registrar Usuario",
+                        AppModules.INDEX_USECASE + "::Listar Usuario",
+                        AppModules.SHOW_USECASE + "::Buscar Usuario por DNI o Nombre",
+                        AppModules.UPDATE_USECASE + "::Editar usuario",
+                        AppModules.DESTROY_USECASE + "::Eliminar usuario",
+                        AppModules.EXIT + "::Regresar al menu principal"
                 ),
                 AppModules.LOAN, new MenuLabel(
                         "========= GESTION PRÉSTAMO =========",
