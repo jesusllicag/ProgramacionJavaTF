@@ -7,7 +7,7 @@ public class LoanSchema extends Validator {
 
     public String quantity(Book book, String quantity) {
         int intQuantity = Integer.parseInt(quantity);
-        int booksAvailable = book.getAvaliableBooksQuantity();
+        int booksAvailable = book.getAvailableBooksQuantity();
         boolean[] rules = {
                 quantity.matches("^\\d+$"),
                 !quantity.isEmpty(),

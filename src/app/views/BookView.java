@@ -13,7 +13,7 @@ public class BookView extends View {
 
     public void runViewList(List<Book> books) {
         for (Book book : books) {
-            this.println(book.toStringWithStock());
+            this.println(book.toStringLoan());
         }
     }
 

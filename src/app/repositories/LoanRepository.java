@@ -40,11 +40,12 @@ public class LoanRepository extends Repository<Loan> implements IRepository {
     public void toSave(String... args) throws ClassNotFoundException {
         int id = this.database.createId();
         Loan loan = new Loan();
-        User user = this.user().get(args[0]);
-        Book book = this.books().get(args[1]);
+        User user = this.user().getById(args[0]);
+        Book book = this.books().getById(args[1]);
         int quantity = Integer.parseInt(args[2]);
         loan.init(id, user, book, quantity);
         this.save(loan);
+        book.addLoan(loan);
     }
 
     public Loan getByCode(String code) throws ClassNotFoundException {

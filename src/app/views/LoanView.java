@@ -17,6 +17,12 @@ public class LoanView extends View {
         }
     }
 
+    public void runViewBookList(List<Loan> loans) {
+        for (Loan loan : loans) {
+            this.println(loan.activeLoanBooktoString());
+        }
+    }
+
     public String runViewStore(Book book) {
         String form;
         // Validar Quantity

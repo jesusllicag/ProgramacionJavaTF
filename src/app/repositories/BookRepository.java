@@ -10,8 +10,10 @@ import app.contracts.models.Stock;
 import database.Loans;
 import database.Stocks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookRepository extends Repository<Book> implements IRepository {
 
@@ -31,15 +33,20 @@ public class BookRepository extends Repository<Book> implements IRepository {
         return (Loans) this.relations[1];
     }
 
-    public List<Book> getAllWithStock() {
+    public List<Book> getAllWithRelations() {
         List<Book> books = this.database.getRecord();
         List<Stock> stocks = this.stock().getRecord();
+        List<Loan> loans = this.loan().getRecord();
         Book[] arr = new Book[books.size()];
 
         for (int i = 0; i < books.size(); i++) {
             Stock stock = stocks.get(i);
             Book book = books.get(i);
             book.setStock(stock);
+            List<Loan> filteredLoans = loans.stream()
+                    .filter(loan -> loan.getBook().getId().equals(book.getId()))
+                    .collect(Collectors.toList());
+            book.setLoans(filteredLoans);
             arr[i] = book;
         }
 
@@ -47,12 +54,18 @@ public class BookRepository extends Repository<Book> implements IRepository {
     }
 
     public Book getFullById(String id) throws ClassNotFoundException {
-        Book book = this.database.get(id);
+        Book book = this.database.getById(id);
         Stock stock = this.stock().getByBookId(book.getId());
         List<Loan> loan = this.loan().getListByBookId(book.getId());
         book.setStock(stock);
         book.setLoans(loan);
         return book;
+    }
+
+    public List<Book> getAllAvailable() {
+        List<Book> books = new ArrayList<>(this.getAllWithRelations());
+        books.removeIf(book ->  book.getAvailableBooksQuantity() == 0 );
+        return books;
     }
 
     public void toSave(String... args) {

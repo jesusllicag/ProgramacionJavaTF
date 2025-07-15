@@ -68,12 +68,21 @@ public class Book extends Model {
         this.loans = loans;
     }
 
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+    }
+
+    public void removeLoan(Loan loan) {
+        this.loans.remove(loan);
+    }
+
     public int getLoansQuantity() {
         return this.loans.size();
     }
 
-    public int getAvaliableBooksQuantity() {
-        return Integer.parseInt(this.getStock().getQuantity()) - this.getLoansQuantity();
+    public int getAvailableBooksQuantity() {
+        int loansQuantity = this.loans.stream().map(Loan::getQuantity).reduce(0, Integer::sum);
+        return Integer.parseInt(this.getStock().getQuantity()) - loansQuantity;
     }
 
     @Override
@@ -85,7 +94,15 @@ public class Book extends Model {
                 "Año de Publicación: " + this.year;
     }
 
+    public String toStringforUserLoanedRelation() {
+        return "Libro: " + this.title;
+    }
+
     public String toStringWithStock() {
         return this.toString() + " | " + this.stock.toBookRelationString();
+    }
+
+    public String toStringLoan() {
+        return this.toString() + " | Cantidad: " + this.getAvailableBooksQuantity();
     }
 }

@@ -3,6 +3,8 @@ package database;
 import app.contracts.classes.DatabaseTable;
 import app.contracts.models.Book;
 
+import java.util.List;
+
 public class Books extends DatabaseTable<Book> {
 
     @Override
@@ -21,4 +23,5 @@ public class Books extends DatabaseTable<Book> {
         this.create("0-1234-7777-3", "El Hacedor", "Jorge Luis Borges", "1960");
         this.create("0-1234-8888-1", "La Sombra del Viento", "Carlos Ruiz Zafón", "2001");
     }
+
 }

@@ -1,53 +1,55 @@
 package app.bootstrap.providers;
 
 import app.contracts.dtos.MenuLabel;
+import app.contracts.interfaces.AppModules;
+
 import java.util.Map;
 
-public class LabelProvider {
+public class LabelProvider implements AppModules {
     public MenuLabel getMainMenuLabel() {
         return new MenuLabel(
-            "========== MENU PRINCIPAL ==========",
-            "book::Gestión de Libros",
-            "user::Gestión de Usuarios",
-            "loan::Gestión de Préstamos",
-            "report::Reportes",
-            "exit::Salir"
+                "========== MENU PRINCIPAL ==========",
+                AppModules.BOOK + "::Gestión de Libros",
+                AppModules.USER + "::Gestión de Usuarios",
+                AppModules.LOAN + "::Gestión de Préstamos",
+                AppModules.REPORT + "::Reportes",
+                AppModules.EXIT + "::Salir"
         );
     }
 
     public MenuLabel getSubMenuLabel(String controller) {
         Map<String, MenuLabel> menu = Map.of(
-                "book", new MenuLabel(
+                AppModules.BOOK, new MenuLabel(
                         "========== GESTION LIBROS ==========",
-                        "store::Registrar Libro",
-                        "index::Listar Libros",
-                        "show::Buscar Libro por titulo o código",
-                        "update::Editar Libro",
-                        "destroy::Eliminar Libro",
-                        "exit::Regresar al menú principal"
+                        AppModules.STORE_USECASE + "::Registrar Libro",
+                        AppModules.INDEX_USECASE + "::Listar Libros",
+                        AppModules.SHOW_USECASE + "::Buscar Libro por titulo o código",
+                        AppModules.UPDATE_USECASE + "::Editar Libro",
+                        AppModules.DESTROY_USECASE + "::Eliminar Libro",
+                        AppModules.EXIT + "::Regresar al menú principal"
                 ),
-                "user", new MenuLabel(
+                AppModules.USER, new MenuLabel(
                         "========= GESTION USUARIOS =========",
-                        "store::Registrar Usuario",
-                        "index::Listar Usuario",
-                        "show::Buscar Usuario por DNI o Nombre",
-                        "update::Editar usuario",
-                        "destroy::Eliminar usuario",
-                        "exit::Regresar al menu principal"
+                        AppModules.STORE_USECASE + "store::Registrar Usuario",
+                        AppModules.INDEX_USECASE + "index::Listar Usuario",
+                        AppModules.SHOW_USECASE + "show::Buscar Usuario por DNI o Nombre",
+                        AppModules.UPDATE_USECASE + "update::Editar usuario",
+                        AppModules.DESTROY_USECASE + "destroy::Eliminar usuario",
+                        AppModules.EXIT + "exit::Regresar al menu principal"
                 ),
-                "loan", new MenuLabel(
+                AppModules.LOAN, new MenuLabel(
                         "========= GESTION PRÉSTAMO =========",
-                        "store::Registrar Préstamo",
-                        "update::Registrar Devolución",
-                        "index::Listar Prestamos activos",
-                        "exit::Regresar al menú principal"
+                        AppModules.STORE_USECASE + "::Registrar Préstamo",
+                        AppModules.UPDATE_USECASE + "::Registrar Devolución",
+                        AppModules.INDEX_USECASE + "::Listar Prestamos activos",
+                        AppModules.EXIT + "::Regresar al menú principal"
                 ),
-                "report", new MenuLabel(
+                AppModules.REPORT, new MenuLabel(
                         "============= REPORTES =============",
-                        "borrowList::Rep. libros prestados",
-                        "availableList::Rep. libros disponibles",
-                        "userList::Rep. usuarios con más préstamos",
-                        "exit::Regresar al menú principal"
+                        AppModules.REPORT_LOAN_LIST + "::Rep. libros prestados",
+                        AppModules.REPORT_AVAILIABLE_LIST + "::Rep. libros disponibles",
+                        AppModules.REPORT_USER_WITH_MORE_LOANS + "::Rep. usuarios con más préstamos",
+                        AppModules.EXIT + "::Regresar al menú principal"
                 )
         );
 

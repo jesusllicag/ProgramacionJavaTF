@@ -21,7 +21,7 @@ public abstract class DatabaseTable<M extends Model> implements IDatabase {
         return this.id;
     }
 
-    public M get(String id) throws ClassNotFoundException {
+    public M getById(String id) throws ClassNotFoundException {
         for (M model : this.getRecord()) {
             if (model.getId().equalsIgnoreCase(id)) {
                 return model;

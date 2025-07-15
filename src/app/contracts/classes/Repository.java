@@ -21,7 +21,7 @@ public abstract class Repository<T extends Model> {
     }
 
     public T getById(String id) throws ClassNotFoundException {
-        return this.database.get(id);
+        return this.database.getById(id);
     }
 
 

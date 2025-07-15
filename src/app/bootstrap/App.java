@@ -2,6 +2,7 @@ package app.bootstrap;
 
 import app.bootstrap.providers.UseCaseProvider;
 import app.bootstrap.providers.LabelProvider;
+import app.contracts.interfaces.AppModules;
 import app.contracts.interfaces.IController;
 import app.utils.AppUtils;
 import app.views.MenuOptionsView;
@@ -11,8 +12,9 @@ import database.Stocks;
 import database.Users;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
-public class App {
+public class App implements AppModules {
 
     public Books books = new Books();
     public Stocks stocks = new Stocks();
@@ -36,6 +38,7 @@ public class App {
         }
     }
 
+    // Imprime en pantalla el menu de opciones para seleccionar el caso de uso
     private String renderMenuInterfaces() {
         MenuOptionsView viewMenu = new MenuOptionsView();
         String controller;
@@ -44,7 +47,7 @@ public class App {
             viewMenu.run();
             if(viewMenu.isExit()) {
                 viewMenu.imprimirPantalla("\n\nSaliendo del programa.");
-                return "exit::exit";
+                return AppModules.EXIT + "::" + AppModules.EXIT;
             }
             controller = viewMenu.getOptionIndex();
 
@@ -59,18 +62,21 @@ public class App {
         String module = args[0];
         String methodName = args[1];
         try {
-            IController controller = (IController) switch (module) {
-                case "book" -> this.useCaseProvider.book(books, stocks);
-                case "user" -> this.useCaseProvider.user(users);
-                case "loan" -> this.useCaseProvider.loan(loans, users, books, stocks);
-                default -> throw new IllegalStateException("Unexpected value: " + module);
+            IController controller = switch (module) {
+                case AppModules.BOOK -> this.useCaseProvider.book(books, stocks, loans);
+                case AppModules.USER -> this.useCaseProvider.user(users);
+                case AppModules.LOAN -> this.useCaseProvider.loan(loans, users, books, stocks);
+                case AppModules.REPORT -> this.useCaseProvider.report(loans, users, books, stocks);
+                default -> throw new IllegalStateException("El modulo: '" + module + "' no esta configurado.");
             };
             Method method = controller.getClass().getMethod(methodName);
             method.invoke(controller);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         } catch (NoSuchMethodException e) {
             System.out.println("Método no encontrado: " + module + "::" + methodName);
         } catch (Exception e) {
-            System.out.println("Error ejecutando método: " + e.getMessage());
+            e.printStackTrace(System.err);
         }
     }
 

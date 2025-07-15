@@ -46,7 +46,11 @@ public class Loan extends Model {
     }
 
     public String getRtnDate() {
-        return rtnDate;
+        return this.rtnDate;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
     }
 
     public void setRtnDate() {
@@ -55,9 +59,24 @@ public class Loan extends Model {
 
     public String activeLoantoString() {
         return  "ID: " + this.id + " | " +
-                "Code: " + this.code + " | " +
+                "Código: " + this.code + " | " +
                 "Usuario: " + this.user.getDni() + " - " + this.user.getName() + " | " +
                 "Libro: " + this.book.getTitle() + " | " +
+                "Cantidad: " + this.quantity + " | " +
+                "Fecha préstamo: " + this.loanDate;
+    }
+
+    public String activeLoanBooktoString() {
+        return  "Código: " + this.code + " | " +
+                "Usuario: " + this.user.getDni() + " - " + this.user.getName() + " | " +
+                "Libro: " + this.book.getTitle() + " | " +
+                "Cantidad: " + this.quantity + " | " +
+                "Fecha préstamo: " + this.loanDate;
+    }
+
+    public String toStringUserLoaned() {
+        return  this.getUser().toStringforLoanedRelation() + " | " +
+                this.getBook().toStringforUserLoanedRelation() + " | " +
                 "Cantidad: " + this.quantity + " | " +
                 "Fecha préstamo: " + this.loanDate;
     }

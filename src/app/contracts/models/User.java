@@ -56,4 +56,8 @@ public class User extends Model {
                 "Correo: " + this.email + " | " +
                 "Teléfono: " + this.phone;
     }
+
+    public String toStringforLoanedRelation() {
+        return  "DNI: " + this.dni + " | " + "Nombre: " + this.name;
+    }
 }

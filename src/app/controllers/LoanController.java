@@ -13,7 +13,7 @@ import app.views.LoanView;
 import app.views.UserView;
 import java.util.List;
 
-public class LoanController extends Controller implements IController {
+public class LoanController extends Controller<Loan> implements IController {
 
     protected LoanRepository repository;
     protected UserRepository userRepository;
@@ -38,23 +38,22 @@ public class LoanController extends Controller implements IController {
         }
 
         this.view.runViewList(list);
-
     }
 
     public void store() throws ClassNotFoundException {
-        String[] loanData = new String[3];
         this.view.println("Registrar nuevo préstamo");
         this.view.println("Selección de Usuario:");
         List<User> userList = this.userRepository.getAll();
         this.userView.runViewList(userList);
-        loanData[0] = this.view.readInput("Ingrese el ID del usuario que realiza el préstamo: ");
+
+        String userId = this.view.readInput("Ingrese el ID del usuario que realiza el préstamo: ");
         this.view.println("\nSelección de Libro:");
-        List<Book> listBooks = this.bookRepository.getAllWithStock();
+        List<Book> listBooks = this.bookRepository.getAllWithRelations();
         this.bookView.runViewList(listBooks);
-        loanData[1] = this.view.readInput("Ingrese el ID del libro que desea prestarse: ");
-        Book book = this.bookRepository.getFullById(loanData[1]);
-        loanData[2] = this.view.runViewStore(book);
-        this.repository.toSave(loanData);
+        String bookId = this.view.readInput("Ingrese el ID del libro que desea prestarse: ");
+        Book book = this.bookRepository.getFullById(bookId);
+        String loanQuantity = this.view.runViewStore(book);
+        this.repository.toSave(userId, bookId, loanQuantity);
         this.view.println("Préstamo guardado");
     }
 

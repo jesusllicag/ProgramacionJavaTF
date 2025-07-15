@@ -19,7 +19,7 @@ public class BookController extends Controller<Book> implements IController {
 
     public void index() {
         this.view.println("Lista de Libros");
-        List<Book> list = this.repository.getAllWithStock();
+        List<Book> list = this.repository.getAllWithRelations();
         this.view.runViewList(list);
     }
 
